@@ -1,0 +1,28 @@
+{
+  "rules": {
+    "semi": ["error", "always"],
+    "curly": ["error", "multi-line", "consistent"],
+    "no-unused-vars": [
+      "error",
+      {
+        "vars": "all",
+        "args": "none",
+        "ignoreRestSiblings": false,
+        "argsIgnorePattern": "^_",
+        "varsIgnorePattern": "^_"
+      }
+    ],
+    "no-use-before-define": "off",
+    "no-nested-ternary": "off",
+    "no-console": "off",
+    "no-plusplus": "off",
+    "import/imports-first": ["warn", "DISABLE-absolute-first"],
+    "import/no-named-as-default": "off",
+    "import/prefer-default-export": "off",
+    "import/no-mutable-exports": "off"
+  },
+  "extends": [],
+  "parserOptions": {
+    "ecmaVersion": 11
+  }
+}

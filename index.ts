@@ -1,9 +1,10 @@
 import { ls, download } from './src/s3'
 import blessed from 'blessed'
 import contrib from 'blessed-contrib'
+import { BUCKETNAME } from './config'
 
-const bucketName = 'Your bucket name here'
 const downloadDestinationPath = '~/Desktop'
+
 const main = async () => {
   try {
     const data = await ls()
@@ -15,23 +16,23 @@ const main = async () => {
     const tree = grid.set(0, 0, 8, 1, contrib.tree, {
       style: { text: 'red' },
       template: { lines: true },
-      label: bucketName,
+      label: ` Bucket: ${BUCKETNAME} `,
     })
 
     //right
     //grid.set(row, col, rowSpan, colSpan, obj, opts)
     const selectedFile = grid.set(0, 1, 2, 1, blessed.log, {
-      label: 'Selected File',
+      label: ' Selected File ',
     })
     const operations = grid.set(2, 1, 2, 1, blessed.log, {
-      label: 'Operations',
+      label: ' Operations ',
     })
     const pathToDownload = grid.set(4, 1, 1, 1, blessed.log, {
-      label: 'Download Path',
+      label: ' Download Path ',
       content: downloadDestinationPath,
     })
     const legend = grid.set(5, 1, 3, 1, blessed.log, {
-      label: 'Legend',
+      label: ' Legend ',
       content: `To Download a file:\nSelect a file and then type 'copy'`,
     })
 

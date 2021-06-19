@@ -1,4 +1,4 @@
-import { ls, download } from './src/s3'
+import { ls, rm, download } from './src/s3'
 import blessed from 'blessed'
 import contrib from 'blessed-contrib'
 import { BUCKETNAME } from './config'
@@ -60,14 +60,25 @@ const main = async () => {
     })
 
     let userInput: string[] = []
-    screen.key(['c', 'o', 'p', 'y'], async (key) => {
+    screen.key(['c', 'o', 'p', 'y', 'r', 'm'], async (key) => {
       userInput.push(key)
-      if (userInput.join('') === 'copy') {
-        userInput = []
-        const { path, name } = currentlySelectedFile
-        if (!!path && !!name) {
+      const { path, name } = currentlySelectedFile
+      if (!!path && !!name) {
+        if (userInput.join('') === 'copy') {
+          userInput = []
           await download(path, downloadDestinationPath, name)
-          operations.log(`Succesfully Downloaded ${name}`)
+          operations.log(`Downloaded: ${name}`)
+        }
+        if (userInput.join('') === 'rm') {
+          userInput = []
+          await rm(path)
+          const updatedData = await ls()
+          // @ts-ignore
+          tree.setData({
+            extended: true,
+            children: updatedData,
+          })
+          operations.log(`Deleted: ${name}`)
         }
       }
     })

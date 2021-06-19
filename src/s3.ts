@@ -28,11 +28,21 @@ export const ls = async () => {
   })
 }
 
-export const mv = () => {}
+export const rm = (filePath: string) => {
+  return new Promise((resolve) => {
+    exec(
+      `aws s3 rm s3://${BUCKETNAME}/${filePath}`,
+      (error: ExecException | null, stdout: string) => {
+        if (error) {
+          console.error(`ls: exec error - ${error}`)
+          process.exit(0)
+        }
 
-export const rm = () => {}
-
-export const cp = () => {}
+        resolve(stdout)
+      },
+    )
+  })
+}
 
 export const download = (
   filePath: string,
@@ -53,3 +63,7 @@ export const download = (
     )
   })
 }
+
+export const mv = () => {}
+
+export const cp = () => {}

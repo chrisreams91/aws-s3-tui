@@ -35,3 +35,5 @@ const buildPath = (paths: string[], originalPath: string): TreeNode[] => {
     }
   })
 }
+
+export const ALPHABET = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'

@@ -1,8 +1,9 @@
 import { exec, ExecException } from 'child_process'
 import { pathStringsIntoTree } from './util'
 import { BUCKETNAME } from '../config'
+import { TreeNode } from './types'
 
-export const ls = async () => {
+export const ls = async (): Promise<TreeNode> => {
   return new Promise((resolve) => {
     exec(
       // this only will grab everything up to the first space if filename has space in it
@@ -28,7 +29,7 @@ export const ls = async () => {
   })
 }
 
-export const rm = (filePath: string) => {
+export const rm = (filePath: string): Promise<void> => {
   return new Promise((resolve) => {
     exec(
       `aws s3 rm s3://${BUCKETNAME}/${filePath}`,
@@ -38,7 +39,7 @@ export const rm = (filePath: string) => {
           process.exit(0)
         }
 
-        resolve(stdout)
+        resolve()
       },
     )
   })
@@ -48,7 +49,7 @@ export const download = (
   filePath: string,
   destination: string,
   fileName: string,
-) => {
+): Promise<void> => {
   return new Promise((resolve) => {
     exec(
       // this only will grab everything up to the first space if filename has space in it
@@ -58,7 +59,7 @@ export const download = (
           console.error(`ls: exec error - ${error}`)
           process.exit(0)
         }
-        resolve(stdout)
+        resolve()
       },
     )
   })
